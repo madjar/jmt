@@ -1,0 +1,4 @@
+/.idea
+/dist
+*.srt
+cabal.sandbox.config
