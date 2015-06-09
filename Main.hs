@@ -7,6 +7,7 @@ import Data.Maybe (fromMaybe)
 import Control.Applicative
 import Data.Text (Text)
 import System.Environment
+import Data.Foldable
 
 import Reply
 
@@ -21,10 +22,12 @@ main = do
   apiToken <- fromMaybe (error "SLACK_API_TOKEN not set")
                <$> lookupEnv "SLACK_API_TOKEN"
   args <- getArgs
-  lines <- concat <$> mapM getLines args
-  let replyFunction query = getReply query lines
-  runBot (myConfig apiToken) (textBot replyFunction) ()
+  scripts <- mapM getLines args
+  let bot = textBot $ reply scripts
+  runBot (myConfig apiToken) bot ()
 
+reply :: [Script] -> Text -> Maybe Text
+reply scripts query = asum . map (getReply query) $ scripts
 
 textBot :: (Text -> Maybe Text) -> SlackBot ()
 textBot f (Message cid _ msg _ _ _)
