@@ -2,11 +2,10 @@
 
 Just set the `SLACK_API_TOKEN` environment variable, and call it with some srt files.
 
-First, initiate the cabal sandbox with
+## Install
 
-    cabal sandbox init
-    cabal install --only-dependencies
+You can use [stack](https://github.com/commercialhaskell/stack) to
+build jmt (you don't even need haskell installed)
 
-Then run it
-
-    cabal run "Les tontons flingueurs.srt"
+    stack build
+    SLACK_API_TOKEN="your token" stack exec jmt "Les tontons flingueurs.srt"
