@@ -1,0 +1,6 @@
+resolver: nightly-2015-06-10
+packages:
+- '.'
+extra-deps:
+  - slack-api-0.4
+  - subtitleParser-0.5
